@@ -10,6 +10,13 @@ interface IPUSHCommInterface {
 
 contract Owner {
 
+
+    function balanceOf()public view returns(uint){
+        return address(this).balance;
+    }
+
+    function depositEth() public payable{}
+
     
     function sendNotification() payable external {
          IPUSHCommInterface(0xb3971BCef2D791bc4027BbfedFb47319A4AAaaAa).sendNotification(
