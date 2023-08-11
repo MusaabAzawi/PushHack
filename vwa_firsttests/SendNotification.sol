@@ -10,7 +10,6 @@ interface IPUSHCommInterface {
 
 contract Owner {
 
-
     function balanceOf()public view returns(uint){
         return address(this).balance;
     }
@@ -28,7 +27,7 @@ contract Owner {
                     abi.encodePacked(
                         "0", // this is notification identity: https://docs.epns.io/developers/developer-guides/sending-notifications/advanced/notification-payload-types/identity/payload-identity-implementations
                         "+", // segregator
-                        "3", // this is payload type: https://docs.epns.io/developers/developer-guides/sending-notifications/advanced/notification-payload-types/payload (1, 3 or 4) = (Broadcast, targetted or subset)
+                        "1", // this is payload type: https://docs.epns.io/developers/developer-guides/sending-notifications/advanced/notification-payload-types/payload (1, 3 or 4) = (Broadcast, targetted or subset)
                         "+", // segregator
                         "Test", // this is notificaiton title
                         "+", // segregator
