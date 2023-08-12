@@ -11,7 +11,7 @@ import { NotificationType } from "./NotificationType";
 import { createSocketConnection, EVENTS } from "@pushprotocol/socket";
 import { ENV } from "@pushprotocol/socket/src/lib/constants";
 import * as PushAPI from "@pushprotocol/restapi";
-import {Chip} from "@mui/material";
+import { Chip } from "@mui/material";
 
 const user: string = "0xFa3D1BD6C0aB6be3A7397F909f645AB0bA0CcCe0";
 const chainId: number = 5;
@@ -99,7 +99,7 @@ export default function Notifications() {
 			message.payload.notification.title,
 			message.payload.notification.body,
 			message.payload.sid,
-			false
+			false,
 		);
 
 		dataRef.current = [notification, ...dataRef.current];
@@ -129,7 +129,7 @@ export default function Notifications() {
 							notification.notification.title,
 							notification.notification.body,
 							notification.sid,
-							false
+							false,
 						),
 					);
 				});
@@ -155,7 +155,7 @@ export default function Notifications() {
 							notification.notification.title,
 							notification.notification.body,
 							notification.sid,
-							true
+							true,
 						),
 					);
 				});
@@ -181,22 +181,30 @@ export default function Notifications() {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{dataRef.current.length === 0
-						? <TableRow>
-								<TableCell>Loading...</TableCell>
-								<TableCell />
-							</TableRow>
-						: <>
+					{dataRef.current.length === 0 ? (
+						<TableRow>
+							<TableCell>Loading...</TableCell>
+							<TableCell />
+						</TableRow>
+					) : (
+						<>
 							{dataRef.current.map((row) => (
 								<TableRow key={row.id}>
-									<TableCell>{row.title} {row.spam &&
-										<Chip label="SPAM" color="warning" size={"small"} />
-									}</TableCell>
+									<TableCell>
+										{row.title}{" "}
+										{row.spam && (
+											<Chip
+												label="SPAM"
+												color="warning"
+												size={"small"}
+											/>
+										)}
+									</TableCell>
 									<TableCell>{row.body}</TableCell>
 								</TableRow>
 							))}
 						</>
-					}
+					)}
 				</TableBody>
 			</Table>
 		</React.Fragment>

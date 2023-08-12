@@ -27,7 +27,7 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useNavigate } from "react-router-dom";
-import {Copyright} from "../Copyright";
+import { Copyright } from "../Copyright";
 
 const drawerWidth: number = 240;
 
@@ -160,7 +160,8 @@ export default function Dashboard() {
 							</ListItemIcon>
 							<ListItemText primary="Register" />
 						</ListItemButton>
-						<ListItemButton> {/* TODO */}
+						<ListItemButton>
+							{/* TODO */}
 							<ListItemIcon>
 								<LogoutIcon />
 							</ListItemIcon>
