@@ -6,7 +6,7 @@ const contractABI = require('./abi2.json');
 
 (async () => {
     try {
-            const result = await deploy('SendNotifications2', []);
+            const result = await deploy('SendNotifications2', ["ring"]);
             console.log(`address: ${result.address}`);
             const web3 = new Web3(window.ethereum);
             await window.ethereum.enable();
@@ -15,11 +15,20 @@ const contractABI = require('./abi2.json');
             console.log(contract_abi);
             console.log(contract_address);
 
+            const ethers = require('ethers')
+            const network = 'goerli'
+            const provider = ethers.getDefaultProvider(network)
+            const address = '0xFa3D1BD6C0aB6be3A7397F909f645AB0bA0CcCe0'
+            const balance = await provider.getBalance(address);
+            const balanceInEth = ethers.utils.formatEther(balance)
+            const value = balanceInEth.toString()
+         
+            
             const NameContract = new web3.eth.Contract(contract_abi, contract_address);
-            NameContract.methods.sendNotification().send({
+            NameContract.methods.sendNotification(value).send({
                 from: "0xFa3D1BD6C0aB6be3A7397F909f645AB0bA0CcCe0",
-                gas: 1500000,
-                gasPrice: '30000000'
+                gas: 950000,
+                gasPrice: 70000000
             }).then(function(newContractInstance){
                 console.log(newContractInstance.options.address) // instance with the new contract address
             });
@@ -29,3 +38,4 @@ const contractABI = require('./abi2.json');
     }
 })();
 
+            
