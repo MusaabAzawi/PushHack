@@ -77,8 +77,8 @@ function sendBrowserNotification(title: string, body: string) {
 }
 
 export default function Notifications() {
-	const [data, setData] = useState<NotificationType[]>([new NotificationType("Loading", "Please wait!", -1, false)]);
-	const dataRef = useRef<NotificationType[]>([new NotificationType("Loading", "Please wait!", -1, false)]);
+	const [data, setData] = useState<NotificationType[]>([]);
+	const dataRef = useRef<NotificationType[]>([]);
 
 	const pushSDKSocket = createSocketConnection({
 		user: userCAIP,
@@ -134,7 +134,8 @@ export default function Notifications() {
 					);
 				});
 
-				dataRef.current = initialData;
+				dataRef.current = [...initialData, ...dataRef.current];
+				dataRef.current = dataRef.current.sort((a, b) => b.id - a.id);
 				setData(dataRef.current);
 			});
 
@@ -160,17 +161,14 @@ export default function Notifications() {
 				});
 
 				dataRef.current = [...initialSpamData, ...dataRef.current];
+				dataRef.current = dataRef.current.sort((a, b) => b.id - a.id);
 				setData(dataRef.current);
 			});
-
-		if (dataRef.current.length === 0) {
-			toastInfo("It seems like there haven't been any notifications sent yet.");
-		}
 	}, []);
 
 	return (
 		<React.Fragment>
-			<Title>Recent Orders</Title>
+			<Title>Recent Notifications</Title>
 			<Table size="small">
 				<TableHead>
 					<TableRow>
@@ -183,14 +181,22 @@ export default function Notifications() {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{dataRef.current.map((row) => (
-						<TableRow key={row.id}>
-							<TableCell>{row.title} {row.spam &&
-								<Chip label="SPAM" color="warning" size={"small"} />
-							}</TableCell>
-							<TableCell>{row.body}</TableCell>
-						</TableRow>
-					))}
+					{dataRef.current.length === 0
+						? <TableRow>
+								<TableCell>Loading...</TableCell>
+								<TableCell />
+							</TableRow>
+						: <>
+							{dataRef.current.map((row) => (
+								<TableRow key={row.id}>
+									<TableCell>{row.title} {row.spam &&
+										<Chip label="SPAM" color="warning" size={"small"} />
+									}</TableCell>
+									<TableCell>{row.body}</TableCell>
+								</TableRow>
+							))}
+						</>
+					}
 				</TableBody>
 			</Table>
 		</React.Fragment>

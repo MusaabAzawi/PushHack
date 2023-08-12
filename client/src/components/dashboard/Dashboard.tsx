@@ -15,10 +15,18 @@ import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { mainListItems, secondaryListItems } from "./listItems";
 import Notifications from "./Notifications";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ListSubheader from "@mui/material/ListSubheader";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import LoginIcon from "@mui/icons-material/Login";
+import ListItemText from "@mui/material/ListItemText";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import LogoutIcon from "@mui/icons-material/Logout";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props: any) {
 	return (
@@ -99,6 +107,7 @@ export default function Dashboard() {
 	const toggleDrawer = () => {
 		setOpen(!open);
 	};
+	const navigate = useNavigate();
 
 	return (
 		<ThemeProvider theme={defaultTheme}>
@@ -149,9 +158,34 @@ export default function Dashboard() {
 					</Toolbar>
 					<Divider />
 					<List component="nav">
-						{mainListItems}
+						<ListItemButton onClick={() => navigate("/")}>
+							<ListItemIcon>
+								<DashboardIcon />
+							</ListItemIcon>
+							<ListItemText primary="Dashboard" />
+						</ListItemButton>
 						<Divider sx={{ my: 1 }} />
-						{secondaryListItems}
+						<ListSubheader component="div" inset>
+							User Account
+						</ListSubheader>
+						<ListItemButton onClick={() => navigate("/login")}>
+							<ListItemIcon>
+								<LoginIcon />
+							</ListItemIcon>
+							<ListItemText primary="Login" />
+						</ListItemButton>
+						<ListItemButton onClick={() => navigate("/register")}>
+							<ListItemIcon>
+								<AppRegistrationIcon />
+							</ListItemIcon>
+							<ListItemText primary="Register" />
+						</ListItemButton>
+						<ListItemButton> {/* TODO */}
+							<ListItemIcon>
+								<LogoutIcon />
+							</ListItemIcon>
+							<ListItemText primary="Logout" />
+						</ListItemButton>
 					</List>
 				</Drawer>
 				<Box
