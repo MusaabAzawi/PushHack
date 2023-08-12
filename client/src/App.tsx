@@ -60,13 +60,7 @@ function App() {
 	const pushSDKSocket = createSocketConnection({
 		user: userCAIP,
 		env: ENV.STAGING,
-		socketOptions: { autoConnect: false },
-	});
-
-	const pushSDKSPAMSocket = createSocketConnection({
-		user: userCAIP,
-		env: ENV.STAGING,
-		socketOptions: { autoConnect: false },
+		socketOptions: { autoConnect: true},
 	});
 
 	pushSDKSocket?.on(EVENTS.CONNECT, () => {
