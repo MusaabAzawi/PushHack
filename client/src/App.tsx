@@ -9,6 +9,8 @@ import { NotificationType } from "./NotificationType";
 import Dashboard from "./components/dashboard/Dashboard";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Login from "./components/login/LoginPage";
+import SignUp from "./components/register/SignUp";
+
 
 const user: string = "0xFa3D1BD6C0aB6be3A7397F909f645AB0bA0CcCe0";
 const chainId: number = 5;
@@ -139,6 +141,8 @@ function App() {
 		<Routes>
 			<Route path="/" element={<Dashboard />} />
 			<Route path="/login" element={<Login />} />
+			<Route path="/signup" element={<SignUp />} />
+			
 		</Routes>
 		</BrowserRouter>
 		
