@@ -76,10 +76,6 @@ function sendBrowserNotification(title: string, body: string) {
 	}
 }
 
-function preventDefault(event: React.MouseEvent) {
-	event.preventDefault();
-}
-
 export default function Notifications() {
 	const [data, setData] = useState<NotificationType[]>([new NotificationType("Loading", "Please wait!", -1)]);
 	const dataRef = useRef<NotificationType[]>([new NotificationType("Loading", "Please wait!", -1)]);
@@ -169,14 +165,6 @@ export default function Notifications() {
 					))}
 				</TableBody>
 			</Table>
-			<Link
-				color="primary"
-				href="#"
-				onClick={preventDefault}
-				sx={{ mt: 3 }}
-			>
-				See more orders
-			</Link>
 		</React.Fragment>
 	);
 }
