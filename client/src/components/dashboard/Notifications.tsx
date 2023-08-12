@@ -1,5 +1,4 @@
 import * as React from "react";
-import Link from "@mui/material/Link";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,6 +11,7 @@ import { NotificationType } from "./NotificationType";
 import { createSocketConnection, EVENTS } from "@pushprotocol/socket";
 import { ENV } from "@pushprotocol/socket/src/lib/constants";
 import * as PushAPI from "@pushprotocol/restapi";
+import {Chip} from "@mui/material";
 
 const user: string = "0xFa3D1BD6C0aB6be3A7397F909f645AB0bA0CcCe0";
 const chainId: number = 5;
@@ -77,8 +77,8 @@ function sendBrowserNotification(title: string, body: string) {
 }
 
 export default function Notifications() {
-	const [data, setData] = useState<NotificationType[]>([new NotificationType("Loading", "Please wait!", -1)]);
-	const dataRef = useRef<NotificationType[]>([new NotificationType("Loading", "Please wait!", -1)]);
+	const [data, setData] = useState<NotificationType[]>([new NotificationType("Loading", "Please wait!", -1, false)]);
+	const dataRef = useRef<NotificationType[]>([new NotificationType("Loading", "Please wait!", -1, false)]);
 
 	const pushSDKSocket = createSocketConnection({
 		user: userCAIP,
@@ -99,6 +99,7 @@ export default function Notifications() {
 			message.payload.notification.title,
 			message.payload.notification.body,
 			message.payload.sid,
+			false
 		);
 
 		dataRef.current = [notification, ...dataRef.current];
@@ -128,18 +129,43 @@ export default function Notifications() {
 							notification.notification.title,
 							notification.notification.body,
 							notification.sid,
+							false
 						),
 					);
 				});
 
-				// Check if initial data is empty
-				if (initialData.length === 0) {
-					toastInfo("It seems like there haven't been any notifications sent yet.");
-				}
-
 				dataRef.current = initialData;
 				setData(dataRef.current);
 			});
+
+		PushAPI.user
+			.getFeeds({
+				user: userCAIP,
+				env: ENV.STAGING,
+				limit: 100,
+				spam: true,
+			})
+			.then((notifications) => {
+				const initialSpamData = new Array<NotificationType>();
+
+				notifications.forEach((notification: any) => {
+					initialSpamData.push(
+						new NotificationType(
+							notification.notification.title,
+							notification.notification.body,
+							notification.sid,
+							true
+						),
+					);
+				});
+
+				dataRef.current = [...initialSpamData, ...dataRef.current];
+				setData(dataRef.current);
+			});
+
+		if (dataRef.current.length === 0) {
+			toastInfo("It seems like there haven't been any notifications sent yet.");
+		}
 	}, []);
 
 	return (
@@ -159,7 +185,9 @@ export default function Notifications() {
 				<TableBody>
 					{dataRef.current.map((row) => (
 						<TableRow key={row.id}>
-							<TableCell>{row.title}</TableCell>
+							<TableCell>{row.title} {row.spam &&
+								<Chip label="SPAM" color="warning" />
+							}</TableCell>
 							<TableCell>{row.body}</TableCell>
 						</TableRow>
 					))}
