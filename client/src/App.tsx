@@ -63,6 +63,12 @@ function App() {
 		socketOptions: { autoConnect: false },
 	});
 
+	const pushSDKSPAMSocket = createSocketConnection({
+		user: userCAIP,
+		env: ENV.STAGING,
+		socketOptions: { autoConnect: false },
+	});
+
 	pushSDKSocket?.on(EVENTS.CONNECT, () => {
 		toastSuccess("Connection established!");
 	});
