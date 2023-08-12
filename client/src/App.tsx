@@ -77,15 +77,15 @@ function App() {
 	const pushSDKSocket = createSocketConnection({
 		user: userCAIP,
 		env: ENV.STAGING,
-		socketOptions: { autoConnect: true },
+		socketOptions: { autoConnect: false },
 	});
 
 	pushSDKSocket?.on(EVENTS.CONNECT, () => {
-		// toastSuccess("Connection established!");
+		toastSuccess("Connection established!");
 	});
 
 	pushSDKSocket?.on(EVENTS.DISCONNECT, () => {
-		// toastError("Connection lost!");
+		toastError("Connection lost!");
 	});
 
 	pushSDKSocket?.on(EVENTS.USER_FEEDS, (message) => {
@@ -99,18 +99,9 @@ function App() {
 		sendBrowserNotification(notification.title, notification.body);
 	});
 
-	// pushSDKSocket?.on(EVENTS.USER_SPAM_FEEDS, (message) => {
-	//   // TODO: Should it show spam?
-	//   console.log(message)
-	//   const notification = new NotificationType(message.payload.notification.title, message.payload.notification.body)
-	//   setData( [notification, ...data])
-	// })
-
-	// useEffect(() => {
-	// 	if(pushSDKSocket?.disconnected) {
-	// 		pushSDKSocket?.connect();
-	// 	}
-	// }, [pushSDKSocket]);
+	useEffect(() => {
+		pushSDKSocket?.connect();
+	}, []);
 
 	useEffect(() => {
 	  PushAPI.user
