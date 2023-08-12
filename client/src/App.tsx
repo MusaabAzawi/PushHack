@@ -6,6 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ENV } from "@pushprotocol/socket/src/lib/constants";
 import { NotificationType } from "./NotificationType";
+import Dashboard from "./components/dashboard/Dashboard";
 
 const user: string = "0xFa3D1BD6C0aB6be3A7397F909f645AB0bA0CcCe0";
 const chainId: number = 5;
@@ -135,6 +136,7 @@ function App() {
 
 	return (
 		<div className="App">
+			<Dashboard />
 			<ToastContainer newestOnTop />
 			{data.map((notification) => {
 				return (
