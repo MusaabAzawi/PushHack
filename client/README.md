@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# Client of PushHack
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Tasks
+
+-   [ ] Adapt logos, `favicon.ico`, `index.html`, and `manifest.json`
 
 ## Available Scripts
 
