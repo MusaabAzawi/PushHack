@@ -1,3 +1,13 @@
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
+
+async function wait() {
+  console.log('start timer');
+  await delay(100000);
+  console.log('after 100 seconds');
+}
+
 const { deploy } = require('./web3-lib.ts');
 const Web3 = require('web3');
 const ethers = require('ethers');
@@ -5,7 +15,7 @@ const contractABI = require('./abi2.json');
 
 
 (async () => {
-    try {
+    
             const result = await deploy('SendNotifications2', ["ring"]);
             console.log(`address: ${result.address}`);
             const web3 = new Web3(window.ethereum);
@@ -14,7 +24,9 @@ const contractABI = require('./abi2.json');
             const contract_address = `${result.address}`
             console.log(contract_abi);
             console.log(contract_address);
-
+            const NameContract = await new web3.eth.Contract(contract_abi, contract_address);
+        
+        while(true) {
             const ethers = require('ethers')
             const network = 'goerli'
             const provider = ethers.getDefaultProvider(network)
@@ -24,7 +36,6 @@ const contractABI = require('./abi2.json');
             const value = balanceInEth.toString()
          
             
-            const NameContract = new web3.eth.Contract(contract_abi, contract_address);
             NameContract.methods.sendNotification(value).send({
                 from: "0xFa3D1BD6C0aB6be3A7397F909f645AB0bA0CcCe0",
                 gas: 950000,
@@ -32,10 +43,6 @@ const contractABI = require('./abi2.json');
             }).then(function(newContractInstance){
                 console.log(newContractInstance.options.address) // instance with the new contract address
             });
+            await wait();
         }
-    catch (e) {
-        console.log(e.message);
-    }
 })();
-
-            
