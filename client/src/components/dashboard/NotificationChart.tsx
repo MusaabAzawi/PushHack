@@ -25,6 +25,7 @@ export default function NotificationChart({ notifications }: ChartProps) {
 		.filter((notification) => {
 			return !isNaN(parseFloat(notification.body));
 		})
+		.reverse()
 		.map((notification) => {
 			const value: number = parseStringToFloat(notification.body);
 			const id: number = notification.id;
