@@ -14,20 +14,26 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Copyright } from "../Copyright";
 import { listUsers, registerUser } from '../../queries/query';
-import { NavLink, useNavigation } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+
+  const navigate = useNavigate();
+  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    // const navigate = useNavigation();
     event.preventDefault();
-    registerUser(firstName, lastName, email, password);
+    registerUser(firstName, lastName, email, password).then((data) => {
+    console.log(data)
     alert("Account created");
-    // return navigate("/login", { replace: true }); // <-- issue imperative redirect
+    navigate("/login");
+    });
   };
+
+
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");

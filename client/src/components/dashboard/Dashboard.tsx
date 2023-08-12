@@ -28,8 +28,16 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useNavigate } from "react-router-dom";
 import { Copyright } from "../Copyright";
+import { useState } from "react";
 
 const drawerWidth: number = 240;
+
+function handleLogout() {
+	localStorage.clear();
+}
+
+//  user: string | null = localStorage.getItem('user_email');
+
 
 interface AppBarProps extends MuiAppBarProps {
 	open?: boolean;
@@ -83,12 +91,14 @@ const Drawer = styled(MuiDrawer, {
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
-	const [open, setOpen] = React.useState(true);
+	const navigate = useNavigate();
+	const [open, setOpen] = useState(true);
 	const toggleDrawer = () => {
 		setOpen(!open);
 	};
-	const navigate = useNavigate();
 
+	
+	
 	return (
 		<ThemeProvider theme={defaultTheme}>
 			<ToastContainer newestOnTop />
@@ -160,7 +170,7 @@ export default function Dashboard() {
 							</ListItemIcon>
 							<ListItemText primary="Register" />
 						</ListItemButton>
-						<ListItemButton>
+						<ListItemButton onClick={()=> {handleLogout(); navigate("/login")}}>
 							{/* TODO */}
 							<ListItemIcon>
 								<LogoutIcon />

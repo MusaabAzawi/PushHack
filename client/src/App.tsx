@@ -6,6 +6,8 @@ import SignUp from "./components/register/SignUp";
 
 
 function App() {
+
+
 	// ------- User Token -------
 	return (
 		<BrowserRouter>

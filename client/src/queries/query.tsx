@@ -48,7 +48,7 @@ export async function registerUser(firstname:string, lastname: string, email: st
     last_name: lastname,
     email: email,
     password: password,
-    channels: "",
+    channels: "test-channel",
   };
 
   return fetch(HOST_CREATE_USER, {
