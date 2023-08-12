@@ -27,27 +27,7 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useNavigate } from "react-router-dom";
-
-function Copyright(props: any) {
-	return (
-		<Typography
-			variant="body2"
-			color="text.secondary"
-			align="center"
-			{...props}
-		>
-			{"Copyright © "}
-			<Link
-				color="inherit"
-				href="https://github.com/MusaabAzawi/PushHack"
-			>
-				Team PushHack
-			</Link>{" "}
-			{new Date().getFullYear()}
-			{"."}
-		</Typography>
-	);
-}
+import {Copyright} from "../Copyright";
 
 const drawerWidth: number = 240;
 
@@ -174,7 +154,7 @@ export default function Dashboard() {
 							</ListItemIcon>
 							<ListItemText primary="Login" />
 						</ListItemButton>
-						<ListItemButton onClick={() => navigate("/register")}>
+						<ListItemButton onClick={() => navigate("/signup")}>
 							<ListItemIcon>
 								<AppRegistrationIcon />
 							</ListItemIcon>
