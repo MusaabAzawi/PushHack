@@ -1,6 +1,6 @@
 {
-	"short_name": "PushHack",
-	"name": "PushHack Client Application",
+	"short_name": "ETH-Push",
+	"name": "ETH-Push Client Application",
 	"icons": [
 		{
 			"src": "favicon.ico",

@@ -15,7 +15,7 @@ export function Copyright(props: any) {
 				color="inherit"
 				href="https://github.com/MusaabAzawi/PushHack"
 			>
-				Team PushHack
+				Team ETH-Push
 			</Link>{" "}
 			{new Date().getFullYear()}
 			{"."}

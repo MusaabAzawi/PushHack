@@ -1,12 +1,5 @@
 # Client of PushHack
 
-## Tasks
-
--   [ ] Adapt logos and `favicon.ico`
--   [ ] When to send which notification
--   [ ] Limit of the notifications which should be received
--   [ ] Logout
-
 ## Available Scripts
 
 In the project directory, you can run:
