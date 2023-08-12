@@ -1,12 +1,12 @@
 import * as React from "react";
+import { useEffect, useRef, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
-import { toast } from "react-toastify";
-import { useEffect, useRef, useState } from "react";
+import { toast, ToastOptions } from "react-toastify";
 import { NotificationType } from "./NotificationType";
 import { createSocketConnection, EVENTS } from "@pushprotocol/socket";
 import { ENV } from "@pushprotocol/socket/src/lib/constants";
@@ -15,49 +15,34 @@ import { Chip } from "@mui/material";
 
 const user: string = "0xFa3D1BD6C0aB6be3A7397F909f645AB0bA0CcCe0";
 const chainId: number = 5;
-
 const userCAIP: string = `eip155:${chainId}:${user}`;
+const env: ENV = ENV.STAGING;
+const notificationsLimit: number = 100;
+
+const toastOptions: ToastOptions = {
+	position: "top-right",
+	autoClose: 5000,
+	hideProgressBar: false,
+	closeOnClick: true,
+	pauseOnHover: true,
+	draggable: true,
+	progress: undefined,
+	theme: "light",
+};
 
 function toastError(message: string) {
 	console.error(message);
-	toast.error(message, {
-		position: "top-right",
-		autoClose: 5000,
-		hideProgressBar: false,
-		closeOnClick: true,
-		pauseOnHover: true,
-		draggable: true,
-		progress: undefined,
-		theme: "light",
-	});
+	toast.error(message, toastOptions);
 }
 
 function toastSuccess(message: string) {
 	console.log(message);
-	toast.success(message, {
-		position: "top-right",
-		autoClose: 5000,
-		hideProgressBar: false,
-		closeOnClick: true,
-		pauseOnHover: true,
-		draggable: true,
-		progress: undefined,
-		theme: "light",
-	});
+	toast.success(message, toastOptions);
 }
 
 function toastInfo(message: string) {
 	console.log(message);
-	toast.info(message, {
-		position: "top-right",
-		autoClose: 5000,
-		hideProgressBar: false,
-		closeOnClick: true,
-		pauseOnHover: true,
-		draggable: true,
-		progress: undefined,
-		theme: "light",
-	});
+	toast.info(message, toastOptions);
 }
 
 function sendBrowserNotification(title: string, body: string) {
@@ -74,6 +59,20 @@ function sendBrowserNotification(title: string, body: string) {
 			}
 		});
 	}
+}
+
+function decryptNotification(encryptedNotification: NotificationType): NotificationType {
+	let body: string = encryptedNotification.body;
+	let title: string = encryptedNotification.title;
+
+	body = decryptString(body);
+	title = decryptString(title);
+
+	return new NotificationType(title, body, encryptedNotification.id, encryptedNotification.spam);
+}
+
+function decryptString(message: string): string {
+	return `DECRYPT: ${message}`;
 }
 
 export default function Notifications() {
@@ -118,7 +117,7 @@ export default function Notifications() {
 			.getFeeds({
 				user: userCAIP,
 				env: ENV.STAGING,
-				limit: 100,
+				limit: notificationsLimit,
 			})
 			.then((notifications) => {
 				const initialData = new Array<NotificationType>();
@@ -142,8 +141,8 @@ export default function Notifications() {
 		PushAPI.user
 			.getFeeds({
 				user: userCAIP,
-				env: ENV.STAGING,
-				limit: 100,
+				env: env,
+				limit: notificationsLimit,
 				spam: true,
 			})
 			.then((notifications) => {
