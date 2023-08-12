@@ -1,7 +1,7 @@
 import "./App.css";
 import { createSocketConnection, EVENTS } from "@pushprotocol/socket";
 import * as PushAPI from "@pushprotocol/restapi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ENV } from "@pushprotocol/socket/src/lib/constants";
@@ -72,6 +72,7 @@ function sendBrowserNotification(title: string, body: string) {
 
 function App() {
 	const [data, setData] = useState<NotificationType[]>([]);
+	const dataRef = useRef<NotificationType[]>([]);
 
 	const pushSDKSocket = createSocketConnection({
 		user: userCAIP,
@@ -93,7 +94,10 @@ function App() {
 			message.payload.notification.body,
 			message.payload.sid,
 		);
-		setData([notification, ...data]);
+
+		dataRef.current = [notification, ...dataRef.current];
+		setData(dataRef.current);
+
 		toastInfo(`${notification.title}: ${notification.body}`);
 		sendBrowserNotification(notification.title, notification.body);
 	});
@@ -120,14 +124,15 @@ function App() {
 					))
 				})
 
-				setData(initialData);
+				dataRef.current = initialData;
+				setData(dataRef.current);
 			});
 	}, [])
 
 	return (
 		<div className="App">
 			<ToastContainer newestOnTop />
-			{data.map((notification) => {
+			{dataRef.current.map((notification) => {
 				return (
 					<p key={notification.id}>
 						<b>{notification.title}</b>: {notification.body}
