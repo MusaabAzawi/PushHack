@@ -106,8 +106,6 @@ function App() {
 	// })
 
 	useEffect(() => {
-		// TODO
-		// Notification.requestPermission();
 		pushSDKSocket?.connect();
 	}, [pushSDKSocket]);
 
