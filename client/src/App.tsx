@@ -1,5 +1,6 @@
 import "./App.css";
 import { createSocketConnection, EVENTS } from "@pushprotocol/socket";
+import * as PushAPI from "@pushprotocol/restapi";
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -65,17 +66,21 @@ function App() {
 	pushSDKSocket?.on(EVENTS.CONNECT, () => {
 		toastSuccess("Connection established!");
 	});
+
 	pushSDKSocket?.on(EVENTS.DISCONNECT, () => {
 		toastError("Connection lost!");
 	});
+
 	pushSDKSocket?.on(EVENTS.USER_FEEDS, (message) => {
 		const notification = new NotificationType(
 			message.payload.notification.title,
 			message.payload.notification.body,
+			message.payload.sid,
 		);
 		setData([notification, ...data]);
-		toastInfo(`<b>{notification.title}</b>: {notification.body}`);
+		toastInfo(`${notification.title}: ${notification.body}`);
 	});
+
 	// pushSDKSocket?.on(EVENTS.USER_SPAM_FEEDS, (message) => {
 	//   // TODO: Should it show spam?
 	//   console.log(message)
@@ -88,20 +93,34 @@ function App() {
 		// Notification.requestPermission();
 		pushSDKSocket?.connect();
 	}, [pushSDKSocket]);
-	// TODO
-	// useEffect(() => {
-	//   PushAPI.user.getFeeds({
-	//     user: userCAIP,
-	//     env: ENV.STAGING
-	//   }).then(notifications => setData(notifications));
-	// })
+
+	useEffect(() => {
+	  PushAPI.user
+			.getFeeds({
+				user: userCAIP,
+				env: ENV.STAGING,
+			})
+			.then((notifications) => {
+				const initialData = new Array<NotificationType>()
+
+				notifications.forEach((notification:any) => {
+					initialData.push(new NotificationType(
+						notification.notification.title,
+						notification.notification.body,
+						notification.sid,
+					))
+				})
+
+				setData(initialData);
+			});
+	}, [])
 
 	return (
 		<div className="App">
 			<ToastContainer newestOnTop />
 			{data.map((notification) => {
 				return (
-					<p key={notification.title}>
+					<p key={notification.id}>
 						<b>{notification.title}</b>: {notification.body}
 					</p>
 				);
