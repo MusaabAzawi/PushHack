@@ -7,7 +7,7 @@ export const HOST_CREATE_USER = `${HOST}/user/create`;
 export const PRIMARY_COLOR = "#38B6FF";
 
 export const HEADERS = {
-  "Access-Control-Allow-Origin": `http://localhost:3000`,
-  "Access-Control-Allow-Credentials": `true`,
-  "Content-Type": `application/json; charset=UTF-8`,
+	"Access-Control-Allow-Origin": `http://localhost:3000`,
+	"Access-Control-Allow-Credentials": `true`,
+	"Content-Type": `application/json; charset=UTF-8`,
 };

@@ -5,14 +5,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Title from "./Title";
 import { NotificationType } from "./NotificationType";
-import {Table} from "@mui/material";
-
+import { Table } from "@mui/material";
 
 interface NotificationTableProps {
 	notifications: NotificationType[];
 }
 
-export default function NotificationTable({notifications}: NotificationTableProps) {
+export default function NotificationTable({
+	notifications,
+}: NotificationTableProps) {
 	return (
 		<React.Fragment>
 			<Title>History</Title>

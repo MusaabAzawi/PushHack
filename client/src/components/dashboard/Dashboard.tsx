@@ -17,7 +17,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationTable from "./NotificationTable";
 import NotificationChart from "./NotificationChart";
 import LatestNotification from "./LatestNotification";
-import {toast, ToastContainer, ToastOptions} from "react-toastify";
+import { toast, ToastContainer, ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ListSubheader from "@mui/material/ListSubheader";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -27,10 +27,10 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useNavigate } from "react-router-dom";
 import { Copyright } from "../Copyright";
-import {ENV} from "@pushprotocol/socket/src/lib/constants";
-import {useEffect, useRef, useState} from "react";
-import {NotificationType} from "./NotificationType";
-import {createSocketConnection, EVENTS} from "@pushprotocol/socket";
+import { ENV } from "@pushprotocol/socket/src/lib/constants";
+import { useEffect, useRef, useState } from "react";
+import { NotificationType } from "./NotificationType";
+import { createSocketConnection, EVENTS } from "@pushprotocol/socket";
 import * as PushAPI from "@pushprotocol/restapi";
 
 const drawerWidth: number = 240;
@@ -40,7 +40,6 @@ function handleLogout() {
 }
 
 //  user: string | null = localStorage.getItem('user_email');
-
 
 interface AppBarProps extends MuiAppBarProps {
 	open?: boolean;
@@ -308,8 +307,12 @@ export default function Dashboard() {
 							</ListItemIcon>
 							<ListItemText primary="Register" />
 						</ListItemButton> */}
-						<ListItemButton onClick={()=> {handleLogout(); navigate("/")}}>
-							{/* TODO */}
+						<ListItemButton
+							onClick={() => {
+								handleLogout();
+								navigate("/");
+							}}
+						>
 							<ListItemIcon>
 								<LogoutIcon />
 							</ListItemIcon>
@@ -337,12 +340,14 @@ export default function Dashboard() {
 								<Paper
 									sx={{
 										p: 2,
-										display: 'flex',
-										flexDirection: 'column',
+										display: "flex",
+										flexDirection: "column",
 										height: 240,
 									}}
 								>
-									<NotificationChart notifications={dataRef.current} />
+									<NotificationChart
+										notifications={dataRef.current}
+									/>
 								</Paper>
 							</Grid>
 							{/* Recent Deposits */}
@@ -350,18 +355,28 @@ export default function Dashboard() {
 								<Paper
 									sx={{
 										p: 2,
-										display: 'flex',
-										flexDirection: 'column',
+										display: "flex",
+										flexDirection: "column",
 										height: 240,
 									}}
 								>
-									<LatestNotification notifications={dataRef.current} />
+									<LatestNotification
+										notifications={dataRef.current}
+									/>
 								</Paper>
 							</Grid>
 							{/* Recent Orders */}
 							<Grid item xs={12}>
-								<Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-									<NotificationTable notifications={dataRef.current} />
+								<Paper
+									sx={{
+										p: 2,
+										display: "flex",
+										flexDirection: "column",
+									}}
+								>
+									<NotificationTable
+										notifications={dataRef.current}
+									/>
 								</Paper>
 							</Grid>
 						</Grid>

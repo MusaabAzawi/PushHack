@@ -4,10 +4,7 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Login from "./components/login/LoginPage";
 import SignUp from "./components/register/SignUp";
 
-
 function App() {
-
-
 	// ------- User Token -------
 	return (
 		<BrowserRouter>
@@ -15,7 +12,6 @@ function App() {
 				<Route path="/dash" element={<Dashboard />} />
 				<Route path="/" element={<Login />} />
 				<Route path="/signup" element={<SignUp />} />
-			
 			</Routes>
 		</BrowserRouter>
 	);
