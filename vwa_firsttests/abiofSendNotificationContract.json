@@ -1,0 +1,14 @@
+[
+	{
+		"inputs": [
+			{
+				"name": "message",
+				"type": "string"
+			}
+		],
+        "name": "sendNotification",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	}
+]
