@@ -2,11 +2,13 @@ export class NotificationType {
 	private _title: string;
 	private _body: string;
 	private _id: number;
+	private _spam: boolean;
 
-	constructor(title: string, body: string, id: number) {
+	constructor(title: string, body: string, id: number, spam: boolean) {
 		this._title = title;
 		this._body = body;
 		this._id = id;
+		this._spam = spam;
 	}
 
 	get body(): string {
@@ -30,5 +32,13 @@ export class NotificationType {
 
 	set id(id: number) {
 		this._id = id;
+	}
+
+	get spam(): boolean {
+		return this._spam;
+	}
+
+	set spam(value: boolean) {
+		this._spam = value;
 	}
 }
