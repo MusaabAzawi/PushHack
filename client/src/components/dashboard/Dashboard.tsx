@@ -22,9 +22,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ListSubheader from "@mui/material/ListSubheader";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import LoginIcon from "@mui/icons-material/Login";
 import ListItemText from "@mui/material/ListItemText";
-import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +34,13 @@ import {createSocketConnection, EVENTS} from "@pushprotocol/socket";
 import * as PushAPI from "@pushprotocol/restapi";
 
 const drawerWidth: number = 240;
+
+function handleLogout() {
+	localStorage.clear();
+}
+
+//  user: string | null = localStorage.getItem('user_email');
+
 
 interface AppBarProps extends MuiAppBarProps {
 	open?: boolean;
@@ -137,11 +142,11 @@ function sendBrowserNotification(title: string, body: string) {
 }
 
 export default function Dashboard() {
-	const [open, setOpen] = React.useState(true);
+	const navigate = useNavigate();
+	const [open, setOpen] = useState(true);
 	const toggleDrawer = () => {
 		setOpen(!open);
 	};
-	const navigate = useNavigate();
 
 	const [data, setData] = useState<NotificationType[]>([]);
 	const dataRef = useRef<NotificationType[]>([]);
@@ -281,7 +286,7 @@ export default function Dashboard() {
 					</Toolbar>
 					<Divider />
 					<List component="nav">
-						<ListItemButton onClick={() => navigate("/")}>
+						<ListItemButton onClick={() => navigate("/dash")}>
 							<ListItemIcon>
 								<DashboardIcon />
 							</ListItemIcon>
@@ -291,7 +296,7 @@ export default function Dashboard() {
 						<ListSubheader component="div" inset>
 							User Account
 						</ListSubheader>
-						<ListItemButton onClick={() => navigate("/login")}>
+						{/* <ListItemButton onClick={() => navigate("/login")}>
 							<ListItemIcon>
 								<LoginIcon />
 							</ListItemIcon>
@@ -302,8 +307,8 @@ export default function Dashboard() {
 								<AppRegistrationIcon />
 							</ListItemIcon>
 							<ListItemText primary="Register" />
-						</ListItemButton>
-						<ListItemButton>
+						</ListItemButton> */}
+						<ListItemButton onClick={()=> {handleLogout(); navigate("/")}}>
 							{/* TODO */}
 							<ListItemIcon>
 								<LogoutIcon />

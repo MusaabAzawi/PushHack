@@ -17,6 +17,7 @@ import { NavLink } from "react-router-dom";
 import { useState } from 'react';
 import { loginUser } from '../../queries/query';
 import { user } from '@pushprotocol/restapi';
+import { useNavigate } from 'react-router-dom';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -25,6 +26,7 @@ export default function SignInSide() {
 
   const [email, setEmail] = useState("");
   const [input_password, setInputPassword] = useState("");
+  const navigate = useNavigate();
 
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -40,8 +42,7 @@ export default function SignInSide() {
           localStorage.setItem("user_last_name", user_last_name);
           localStorage.setItem("user_email", user_email);
           localStorage.setItem("channels", user_channels);
-          console.log("data", data);
-          // navigate("/", { replace: true });
+          navigate("/dash");
         } else {
           alert("Password is incorrect");
         }
