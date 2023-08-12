@@ -13,7 +13,7 @@ const chainId: number = 5;
 const userCAIP: string = `eip155:${chainId}:${user}`;
 
 function toastError(message: string) {
-    console.error(message)
+	console.error(message);
 	toast.error(message, {
 		position: "top-right",
 		autoClose: 5000,
@@ -27,7 +27,7 @@ function toastError(message: string) {
 }
 
 function toastSuccess(message: string) {
-    console.log(message)
+	console.log(message);
 	toast.success(message, {
 		position: "top-right",
 		autoClose: 5000,
@@ -41,7 +41,7 @@ function toastSuccess(message: string) {
 }
 
 function toastInfo(message: string) {
-    console.log(message)
+	console.log(message);
 	toast.info(message, {
 		position: "top-right",
 		autoClose: 5000,
@@ -52,6 +52,22 @@ function toastInfo(message: string) {
 		progress: undefined,
 		theme: "light",
 	});
+}
+
+function sendBrowserNotification(title: string, body: string) {
+	if ("Notification" in window && Notification.permission === "granted") {
+		const notification = new Notification(title, {
+			body: body,
+		});
+	} else {
+		Notification.requestPermission().then((permission) => {
+			if (permission === "granted") {
+				const notification = new Notification(title, {
+					body: body,
+				});
+			}
+		});
+	}
 }
 
 function App() {
@@ -79,6 +95,7 @@ function App() {
 		);
 		setData([notification, ...data]);
 		toastInfo(`${notification.title}: ${notification.body}`);
+		sendBrowserNotification(notification.title, notification.body);
 	});
 
 	// pushSDKSocket?.on(EVENTS.USER_SPAM_FEEDS, (message) => {

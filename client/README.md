@@ -3,6 +3,8 @@
 ## Tasks
 
 -   [ ] Adapt logos, `favicon.ico`, `index.html`, and `manifest.json`
+-   [ ] When to send which notification
+-   [ ] Multiple notifications when message is recieved
 
 ## Available Scripts
 
