@@ -2,7 +2,7 @@
 
 ## Tasks
 
--   [ ] Adapt logos, `favicon.ico`, `index.html`, and `manifest.json`
+-   [ ] Adapt logos and `favicon.ico`
 -   [ ] When to send which notification
 -   [ ] Limit of the notifications which should be received
 -   [ ] Logout
