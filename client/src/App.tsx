@@ -56,13 +56,13 @@ function toastInfo(message: string) {
 
 function sendBrowserNotification(title: string, body: string) {
 	if ("Notification" in window && Notification.permission === "granted") {
-		const notification = new Notification(title, {
+		new Notification(title, {
 			body: body,
 		});
 	} else {
 		Notification.requestPermission().then((permission) => {
 			if (permission === "granted") {
-				const notification = new Notification(title, {
+				new Notification(title, {
 					body: body,
 				});
 			}
@@ -76,15 +76,15 @@ function App() {
 	const pushSDKSocket = createSocketConnection({
 		user: userCAIP,
 		env: ENV.STAGING,
-		socketOptions: { autoConnect: false },
+		socketOptions: { autoConnect: true },
 	});
 
 	pushSDKSocket?.on(EVENTS.CONNECT, () => {
-		toastSuccess("Connection established!");
+		// toastSuccess("Connection established!");
 	});
 
 	pushSDKSocket?.on(EVENTS.DISCONNECT, () => {
-		toastError("Connection lost!");
+		// toastError("Connection lost!");
 	});
 
 	pushSDKSocket?.on(EVENTS.USER_FEEDS, (message) => {
@@ -105,15 +105,18 @@ function App() {
 	//   setData( [notification, ...data])
 	// })
 
-	useEffect(() => {
-		pushSDKSocket?.connect();
-	}, [pushSDKSocket]);
+	// useEffect(() => {
+	// 	if(pushSDKSocket?.disconnected) {
+	// 		pushSDKSocket?.connect();
+	// 	}
+	// }, [pushSDKSocket]);
 
 	useEffect(() => {
 	  PushAPI.user
 			.getFeeds({
 				user: userCAIP,
 				env: ENV.STAGING,
+				limit: 100,
 			})
 			.then((notifications) => {
 				const initialData = new Array<NotificationType>()

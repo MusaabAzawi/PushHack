@@ -4,7 +4,8 @@
 
 -   [ ] Adapt logos, `favicon.ico`, `index.html`, and `manifest.json`
 -   [ ] When to send which notification
--   [ ] Multiple notifications when message is recieved
+-   [ ] Multiple notifications when message is received
+-   [ ] Limit of the notifications which should be received
 
 ## Available Scripts
 
