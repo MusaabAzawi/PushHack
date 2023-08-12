@@ -186,7 +186,7 @@ export default function Notifications() {
 					{dataRef.current.map((row) => (
 						<TableRow key={row.id}>
 							<TableCell>{row.title} {row.spam &&
-								<Chip label="SPAM" color="warning" />
+								<Chip label="SPAM" color="warning" size={"small"} />
 							}</TableCell>
 							<TableCell>{row.body}</TableCell>
 						</TableRow>
