@@ -14,7 +14,16 @@ const contractABI = require('./abi2.json');
             const contract_address = `${result.address}`
             console.log(contract_abi);
             console.log(contract_address);
-            const value = "abc";
+
+            const ethers = require('ethers')
+            const network = 'goerli'
+            const provider = ethers.getDefaultProvider(network)
+            const address = '0xFa3D1BD6C0aB6be3A7397F909f645AB0bA0CcCe0'
+            const balance = await provider.getBalance(address);
+            const balanceInEth = ethers.utils.formatEther(balance)
+            const value = balanceInEth.toString()
+         
+            
             const NameContract = new web3.eth.Contract(contract_abi, contract_address);
             NameContract.methods.sendNotification(value).send({
                 from: "0xFa3D1BD6C0aB6be3A7397F909f645AB0bA0CcCe0",
@@ -29,3 +38,4 @@ const contractABI = require('./abi2.json');
     }
 })();
 
+            
