@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { ENV } from "@pushprotocol/socket/src/lib/constants";
 import { NotificationType } from "./NotificationType";
 import Dashboard from "./components/dashboard/Dashboard";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Login from "./components/login/LoginPage";
 
 const user: string = "0xFa3D1BD6C0aB6be3A7397F909f645AB0bA0CcCe0";
 const chainId: number = 5;
@@ -130,18 +132,16 @@ function App() {
 			});
 	}, [])
 
+	// ------- User Token -------
+
 	return (
-		<div className="App">
-			<Dashboard />
-			<ToastContainer newestOnTop />
-			{dataRef.current.map((notification) => {
-				return (
-					<p key={notification.id}>
-						<b>{notification.title}</b>: {notification.body}
-					</p>
-				);
-			})}
-		</div>
+		<BrowserRouter>
+		<Routes>
+			<Route path="/" element={<Dashboard />} />
+			<Route path="/login" element={<Login />} />
+		</Routes>
+		</BrowserRouter>
+		
 	);
 }
 
