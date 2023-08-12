@@ -2,6 +2,7 @@ import yaml
 import motor.motor_asyncio
 from bson import ObjectId
 from fastapi.encoders import jsonable_encoder
+from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from fastapi import FastAPI, Body
 from model  import UserModel
@@ -13,6 +14,19 @@ with open("./assets/credentials.yaml") as f:
 app = FastAPI()
 client = motor.motor_asyncio.AsyncIOMotorClient(credentials["mongo-url"])
 db = client.PushHack
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Endpoint for listing all the users in the database
@@ -31,7 +45,7 @@ async def get_user_by_email(email: str):
     user = await db["users"].find_one({"email": email})
     if not user:
         print('user not found, use standard user')
-        user = await db["users"].find_one({"email": "anil.kul@tum.de"})
+        user = await db["users"].find_one({"pushHack@push.com"})
     return user
 
 # Endpoint for creating a new user
