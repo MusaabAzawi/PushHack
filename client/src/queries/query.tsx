@@ -41,14 +41,14 @@ export async function listUsers() {
   }
 
 // create a new user 
-export async function registerUser(firstname:string, lastname: string, email: string, password: string, channels: string) {
+export async function registerUser(firstname:string, lastname: string, email: string, password: string) {
 
   const data = {
     first_name: firstname,
     last_name: lastname,
     email: email,
     password: password,
-    channels: []
+    channels: "",
   };
 
   return fetch(HOST_CREATE_USER, {

@@ -12,13 +12,18 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { NavLink } from "react-router-dom";
+import { useState } from 'react';
+import { loginUser } from '../../queries/query';
+import { user } from '@pushprotocol/restapi';
+
 
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://github.com/MusaabAzawi/PushHack/tree/main">
+        Push Hack
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -30,13 +35,30 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
+
+  const [email, setEmail] = useState("");
+  const [input_password, setInputPassword] = useState("");
+
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+      event.preventDefault();
+      loginUser(email).then((data) => {
+        const { password } = data; // Extract t password from the response data
+        if (password === input_password) {
+          const user_first_name = data.first_name;
+          const user_last_name = data.last_name;
+          const user_email = data.email;
+          const user_channels = data.channels;
+          localStorage.setItem("user_first_name", user_first_name);
+          localStorage.setItem("user_last_name", user_last_name);
+          localStorage.setItem("user_email", user_email);
+          localStorage.setItem("channels", user_channels);
+          console.log("data", data);
+          // navigate("/", { replace: true });
+        } else {
+          alert("Password is incorrect");
+        }
+      });
   };
 
   return (
@@ -83,6 +105,7 @@ export default function SignInSide() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -93,6 +116,7 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(e) => setInputPassword(e.target.value)}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -106,17 +130,10 @@ export default function SignInSide() {
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
+              <Grid container justifyContent="flex-end">
+              <NavLink to="/signup">
+                {"Don't have an account? Sign Up"}
+              </NavLink>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>

@@ -45,7 +45,7 @@ async def get_user_by_email(email: str):
     user = await db["users"].find_one({"email": email})
     if not user:
         print('user not found, use standard user')
-        user = await db["users"].find_one({"email": "anil.kul@tum.de"})
+        user = await db["users"].find_one({"pushHack@push.com"})
     return user
 
 # Endpoint for creating a new user
