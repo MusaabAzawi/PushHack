@@ -81,8 +81,8 @@ function preventDefault(event: React.MouseEvent) {
 }
 
 export default function Notifications() {
-	const [data, setData] = useState<NotificationType[]>([]);
-	const dataRef = useRef<NotificationType[]>([]);
+	const [data, setData] = useState<NotificationType[]>([new NotificationType("Loading", "Please wait!", -1)]);
+	const dataRef = useRef<NotificationType[]>([new NotificationType("Loading", "Please wait!", -1)]);
 
 	const pushSDKSocket = createSocketConnection({
 		user: userCAIP,
@@ -135,6 +135,11 @@ export default function Notifications() {
 						),
 					);
 				});
+
+				// Check if initial data is empty
+				if (initialData.length === 0) {
+					toastInfo("It seems like there haven't been any notifications sent yet.");
+				}
 
 				dataRef.current = initialData;
 				setData(dataRef.current);
