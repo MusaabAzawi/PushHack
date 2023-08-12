@@ -29,7 +29,7 @@ export default function SignUp() {
     registerUser(firstName, lastName, email, password).then((data) => {
     console.log(data)
     alert("Account created");
-    navigate("/login");
+    navigate("/");
     });
   };
 

@@ -148,7 +148,7 @@ export default function Dashboard() {
 					</Toolbar>
 					<Divider />
 					<List component="nav">
-						<ListItemButton onClick={() => navigate("/")}>
+						<ListItemButton onClick={() => navigate("/dash")}>
 							<ListItemIcon>
 								<DashboardIcon />
 							</ListItemIcon>
@@ -158,7 +158,7 @@ export default function Dashboard() {
 						<ListSubheader component="div" inset>
 							User Account
 						</ListSubheader>
-						<ListItemButton onClick={() => navigate("/login")}>
+						{/* <ListItemButton onClick={() => navigate("/login")}>
 							<ListItemIcon>
 								<LoginIcon />
 							</ListItemIcon>
@@ -169,8 +169,8 @@ export default function Dashboard() {
 								<AppRegistrationIcon />
 							</ListItemIcon>
 							<ListItemText primary="Register" />
-						</ListItemButton>
-						<ListItemButton onClick={()=> {handleLogout(); navigate("/login")}}>
+						</ListItemButton> */}
+						<ListItemButton onClick={()=> {handleLogout(); navigate("/")}}>
 							{/* TODO */}
 							<ListItemIcon>
 								<LogoutIcon />

@@ -42,7 +42,7 @@ export default function SignInSide() {
           localStorage.setItem("user_last_name", user_last_name);
           localStorage.setItem("user_email", user_email);
           localStorage.setItem("channels", user_channels);
-          navigate("/");
+          navigate("/dash");
         } else {
           alert("Password is incorrect");
         }
